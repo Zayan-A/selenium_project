@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: INstall required dependencies
+      apt:
+        update_cache: yes
+        pkg:
+        - nginx
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started 
+        enabled: yes
+
+    - name: Deploy static site content
+      copy:
+        content: "<h1>Hello from AWS Codepipline and Ansible</h1>"
+        dest: /var/www/html/index.html
